@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @state.name %>
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @state.articles.each do |article| %>
+      <tr>
+        <% if article.collection %>
+        <td><%= link_to article.collection.try(:name), article.collection %></td>
+        <% else %>
+        <td></td>
+        <% end %>
+        <td><%= link_to article.title, article %></td>
+        <td><%= article.authors.pluck(:name) %></td>
+        <td><%= link_to 'Edit', edit_article_path(article) %></td>
+        <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p>
+  <strong>Geojson:</strong>
+  <pre><%= JSON.dump(@state.geojson) %></pre>
+</p>
+
+<%= link_to 'Back', states_path %>

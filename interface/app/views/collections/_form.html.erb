@@ -1,0 +1,61 @@
+<%= form_with(model: collection, local: true) do |form| %>
+  <% if collection.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(collection.errors.count, "error") %> prohibited this collection from being saved:</h2>
+
+      <ul>
+      <% collection.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :lat %>
+    <%= form.number_field :lat, step: :any %>
+  </div>
+    
+  <div class="field">
+    <%= form.label :lng %>
+    <%= form.number_field :lng, step: :any %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :km_radius %>
+    <%= form.number_field :km_radius, step: 0.001 %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :min_lat %>
+    <%= form.number_field :min_lat, step: 0.001 %>
+  </div>
+    
+  <div class="field">
+    <%= form.label :min_lng %>
+    <%= form.number_field :min_lng, step: 0.001 %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :max_lat %>
+    <%= form.number_field :max_lat, step: 0.001 %>
+  </div>
+    
+  <div class="field">
+    <%= form.label :max_lng %>
+    <%= form.number_field :max_lng, step: 0.001 %>
+  </div>
+  
+  <div class="field">
+  <a href="http://bboxfinder.com/#<%=collection.viewbox %>" target="_blank">Bounding Box Tool</a>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,458 @@
+.Rectangle-2 {
+  background-image: url("https://covid-lenfest.herokuapp.com/images/covid-logo.png");
+  background-position: center 43px;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 122px;
+  background-color: #16183a;
+}
+
+.state {
+    color: #0d2c78;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.header {
+    padding-bottom: 4px;
+    
+    height: 32px;
+    font-size: 24px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #0d2c78;    
+}
+
+.footer {
+  color: #fff !important;
+  background-color: #16183a;
+  height: 165px;
+  padding: 20px;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer a {
+  color: #fff !important;
+  text-decoration: underline;
+}
+
+.Rectangle {
+  padding-left: 36px;
+  padding-right: 36px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  border-radius: 4px;
+  border: solid 1px #0d2c78;
+  margin-bottom: 24px;
+  margin-top: 47px;
+}
+
+.content {
+  padding-left: 0px !important;  
+  padding-right: 0px !important;  
+}
+
+.list {
+    padding-top: 5px;
+}
+
+body {
+    background-position: center 50px;
+    background-repeat: no-repeat;
+    font-family: "Roboto","Arial",sans-serif;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+}
+
+.newsletter {
+  margin: 0 0 0 11px;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1.33;
+  color: #000000;
+  padding: 25px 0px 12px 0px;
+}
+
+.newsletter a {
+  color: #0066aa !important;  
+}
+
+.newsletter a:visited {
+  color: #0066aa !important;  
+}
+
+.newsletter a:hover {
+  color: #0066aa !important;
+  background-color: white !important;
+}
+
+.explanation-bold {
+  padding-bottom: 42px;  
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1.33;
+}
+
+.explanation {
+  padding-left: 20px;  
+  padding-right: 20px;  
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+  color: #0d2c78;
+}
+
+.explanation a {
+  color: #0d2c78 !important;
+  text-decoration: underline;
+}
+
+.main {
+  padding-top: 0px !important;
+  padding: 30px;
+}
+
+.imageContainer {
+  min-height: 100px;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+@media only screen and (max-width: 700px) {
+  
+  .Rectangle-2 {
+    background-image: url("https://covid-lenfest.herokuapp.com/images/covid-logo-sm.png");
+    background-position: center 25px;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 122px;
+    background-color: #16183a;
+  }
+  
+  .article-text {
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  
+  .Rectangle {
+    margin-left: 12px !important;
+    margin-right: 12px !important;
+    margin-top: 20px;
+  }
+  
+  .explanation-bold {
+    padding-left: 20px;  
+    padding-right: 20px;  
+  }
+  
+  .header {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  
+  .imageContainer {
+    height: 200px;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  
+  body {
+      background-position: center 40px;
+      background-image: url("https://covid-lenfest.herokuapp.com/images/logo-sm.png");
+      font-size: 16px;
+  }
+  
+  .main {
+      padding-top: 0px !important;
+      padding-left: 0px !important;
+      padding-right: 0px !important;
+  }
+  
+  .statistics {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+  }
+}
+
+.think {
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  color: #0d2c78;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 9px;
+}
+
+.feedback {
+  padding-top: 24px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+/*div.container6 p {
+  margin: 0 }
+*/
+
+.articles {
+  margin-bottom: 20px;
+}
+
+.snippet {
+  font-size: 16px;
+  color: #706c61;
+}
+
+a {
+    color: #0066aa;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #0066aa;
+    text-decoration: underline;
+}
+
+a:hover {
+  color: #0066aa;
+  text-decoration: underline;
+  background-color: white !important;
+}
+
+a.jump {
+  color: black;
+}
+
+a.btn-feedback {
+  text-decoration: none;
+}
+
+a.btn-feedback:hover {
+  background-color: #ff671f !important;
+}
+
+a.story-link {
+  color: #0066aa;
+  font-weight: 500;
+  text-decoration: none ;
+}
+
+
+a.story-link:hover {
+  color: #0066aa;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+
+/*.btn-feedback {
+    border-color: #ff671f;
+    border-radius: 4px;
+    padding: 2px 10px;
+    width: 150px;
+    height: 36px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: #ffffff;
+    margin-left: auto;
+    margin-right: auto;
+
+}*/
+
+.btn-feedback {
+    bottom: 80px;
+    background-color: #ff671f;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 2px solid #ff671f;
+    font-size: 20px;
+}
+
+.btn-jump {
+    bottom: 20px;
+    background-color: #0d2c78;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 2px solid #0d2c78;
+    font-size: 18px;
+}
+
+.btn-fixed {
+  padding-left: 9px;
+  padding-right: 9px;
+  right: 0px;
+  position: fixed;
+  width: 157px;
+  color: #ffffff;
+  border-radius: 5px 0px 0px 5px;
+}
+
+.btn-fixed img {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.btn-fixed:focus {
+  outline:0;
+}
+
+a.btn-fixed:hover {
+  color: #ffffff;
+}
+
+.statistics {
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: #f3f3f3;
+  margin-top: 12px;
+  margin-bottom: 22px;
+  font-size: 15px;
+}
+
+.stat-signup {
+  padding-top: 10px !important;
+  padding-bottom: 15px !important;
+	color: #000000;
+  font-size: 14px;
+}
+
+.stat-signup a {
+  color: #0066aa !important;
+}
+
+.stat-graph {
+  width: 100%;
+  border-left: 1px solid #979797;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #000000;
+  float: left;
+  padding-left: 24px !important;
+}
+
+.statistics > .row {
+  padding-left: 36px !important;
+  padding-right: 36px !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .statistics > .row {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+}
+
+.stat-box {
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #000000;
+  float: left;
+  padding-top: 15px !important;
+  padding-right: 15px !important;
+  padding-bottom: 0px !important;
+}
+
+.info-box {
+  font-size: 16px;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: gray;
+  float: left;
+  padding: 15px !important;
+}
+
+.stat-box table {
+    width: 100%;
+   font-size: 16px;
+   font-weight: 500;
+   color: #706c61;
+}
+
+.stat-box td {
+  padding-top: 8px;
+}
+
+.stat-title {
+  font-weight: bold;
+}
+
+.stat-line {
+  border-left: 1px solid #979797;
+  padding-left: 10px;
+}
+
+.stat-trend {
+  min-width: 134px;
+  width: 80%;
+  height: 42px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #706c61;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  margin-top: 12px;
+}
+
+.stat-trend {
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #706c61;
+}
+
+.article {
+  padding-bottom: 10px;
+}
+
+.article-img {
+  padding-bottom: 10px; 
+  width: 100%;
+  padding-left: 12px;
+  padding-right: 12px;
+  
+}
+
+.article-text {
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
+
+.no-stories {
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+#chart {
+    width: 100% !important;
+}
+
+/*Dark Blue - #16183a
+LightBlue - #0d2c78
+Orange - # ff671f
+White - #ffffff
+*/

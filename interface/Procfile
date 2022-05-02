@@ -1,0 +1,14 @@
+web: bundle exec puma -t 5:5 -p ${PORT:-3000} -e ${RACK_ENV:-development}
+worker: bundle exec sidekiq -c 1 -t 60 -q urgent,1 -q critical,2 -q find,1 -q county,1 -q google,1 -q osm,1 -q api,1 -q default,1 -q bert,1 -q spacy,2
+simple: bundle exec sidekiq -c 1 -t 60 -q critical,1 -q google,1 -q default,1
+api: bundle exec sidekiq -c 1 -t 60 -q api -q default,1
+find: bundle exec sidekiq -c 1 -t 60 -q find -q default,1
+county: bundle exec sidekiq -c 1 -t 60 -q county -q default,1
+google: bundle exec sidekiq -c 1 -t 60 -q google -q default,1
+osm: bundle exec sidekiq -c 1 -t 60 -q osm -q default,1
+low: bundle exec sidekiq -c 1 -t 60 -q find,1 -q county,1 -q api,1 -q osm,1
+critical: bundle exec sidekiq -c 1 -t 60 -q critical,1 -q spacy,1
+urgent: bundle exec sidekiq -c 1 -t 60 -q urgent,1
+default: bundle exec sidekiq -c 1 -t 60 -q default,1
+bert: bundle exec sidekiq -c 1 -t 60 -q bert,1
+spacy: bundle exec sidekiq -c 1 -t 60 -q spacy,1

@@ -1,0 +1,23 @@
+wb = xlsx_package.workbook
+
+c_sheet = wb.add_worksheet(name: "Points")
+c_sheet.add_row ["article.published_at", "article.identifier", "article.title", "article.topic_name", "location.id", "location.name", "GEOID-NH", "GEOID-CT", "GEOID-CO", "Formatted Address", "Latitude", "Longitude"]
+@locations.each do |location|
+  articles = location.articles.where("identifier IN (?)", @article_ids)
+  articles.each do | article |
+    row = c_sheet.add_row [
+      article.published_at,
+      article.identifier, 
+      article.title,
+      article.topic_name,
+      location.id, 
+      location.name,
+      location.neigborhood_geoid, 
+      location.census_geoid, 
+      location.county_geoid, 
+      location.formatted_address,
+      location.lat,
+      location.lon
+    ]
+  end
+end

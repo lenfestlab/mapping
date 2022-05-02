@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>States</h1>
+
+<table>
+
+  <tbody>
+    <% @states.each do |state| %>
+      <tr>
+        <td><%= link_to state.name, state %>
+            <% state.locations.each do |location| %>
+                <p style="margin-left: 40px;"><%= link_to location.name, location %></p>
+                <% location.articles.each do |article| %>
+                    <p style="margin-left: 80px;"><%= link_to article.title, article %></p>
+                <% end %>
+            <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Location', new_location_path %>

@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Locations</h1>
+
+<table>
+
+  <tbody>
+    <% @locations.each do |location| %>
+      <tr>
+        <td><%= link_to location.name, location %>
+            <% location.articles.where("collection_id = ?", @collection.id).each do |article| %>
+                <p style="margin-left: 40px;"><%= link_to article.title, article %></p>
+            <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Location', new_location_path %>

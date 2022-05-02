@@ -1,0 +1,41 @@
+<%= form_with(model: location, local: true) do |form| %>
+  <% if location.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(location.errors.count, "error") %> prohibited this location from being saved:</h2>
+
+      <ul>
+      <% location.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= location.name %>
+  </div>
+
+  <div class="field">
+        <%= form.label :comment %>
+        <%= form.text_area :comment %>
+  </div>
+  
+  <div class="field">
+      <%= form.label :flagged %>
+      <%= form.check_box :flagged %>
+  </div>
+  
+  <div class="field">
+      <%= form.label :use_osm %>
+      <%= form.check_box :use_osm %>
+  </div>
+  
+  <div class="field">
+  <%= form.collection_select :flag_id, Flag.order(:reason), :id, :reason, include_blank: "Select Reason" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

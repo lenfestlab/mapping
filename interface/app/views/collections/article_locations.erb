@@ -1,0 +1,42 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @collection.name %>
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>County</th>
+      <th>Location</th>
+      <th>Title</th>
+      <th>Published</th>
+      <th>Flagged</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+ 
+  <tbody>
+    <% @article_locations.each do |article_location| %>
+      <tr>
+        <td><%= article_location.location.county.try(:name) %></td>
+        <td><%= article_location.location.try(:name) %></td>
+        <td><%= link_to article_location.article.title, article_location.article.source_url %></td>
+        <td><%= article_location.article.published_at %></td>
+        <td><%= article_location.flagged %></td>
+        <td><%= link_to 'Edit', edit_article_location_path(article_location) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p>
+  Download:
+  <%= link_to "CSV", collection_path(@collection, format: "csv") %>
+</p>
+
+<%= link_to 'Edit', edit_collection_path(@collection) %> |
+<%= link_to 'Back', collections_path %> |
+<%= link_to 'Map', collection_path(@collection) + '/map' %> |
+<%= link_to 'Locations', collection_path(@collection) + '/locations' %>

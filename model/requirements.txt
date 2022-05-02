@@ -1,0 +1,21 @@
+--find-links https://download.pytorch.org/whl/torch_stable.html
+
+gunicorn==20.1.0
+Flask
+Keras
+pandas
+pytorch-pretrained-bert
+scikit-learn
+spacy==3.0.0
+tensorflow
+nltk==3.6.4
+torch==1.10.0+cpu
+torchvision==0.11.0+cpu
+torchaudio==0.10.0
+tqdm
+cleantext==1.1.4
+nested-coref-resolver==0.0.2
+flair==0.11.1
+allennlp==2.8.0
+allennlp-models==2.8.0 
+https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.0.0/en_core_web_sm-3.0.0.tar.gz

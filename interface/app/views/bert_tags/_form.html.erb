@@ -1,0 +1,91 @@
+<script type='text/javascript' src="/map.js"></script>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Article: <%= link_to @bert_tag.sentence.article.id, @bert_tag.sentence.article %></strong><br>
+</p>
+<p>
+  <strong>Sentence: <%= link_to @bert_tag.sentence.id, @bert_tag.sentence %></strong><br>
+  <%= highlight(@bert_tag.sentence.content, @bert_tag.content) %>
+</p>
+<p>
+  <strong>Tag:</strong>
+  <%= @bert_tag.content %>
+</p>
+
+<p>
+  <strong>Search Term:</strong>
+  <%= @bert_tag.search_term %>
+</p>
+
+<style>
+  .searchbox {
+    margin: 10px; width: 50%; height: 32px; border: 2px solid lightgray;
+  }
+</style>
+
+<script>
+  function initAutocomplete() {
+    const map = new google.maps.Map(document.getElementById("googleMap"), {
+      center: { lat: 39.952583, lng: -75.165222 },
+      zoom: 13,
+      mapTypeId: "roadmap",
+    });
+    // Create the search box and link it to the UI element.
+    const input = document.getElementById("pac-input");
+    const searchBox = new google.maps.places.SearchBox(input);
+
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener("bounds_changed", () => {
+      searchBox.setBounds(map.getBounds());
+    });
+     
+    lat = <%= @bert_tag.location.try(:lat) %>
+    lng = <%= @bert_tag.location.try(:lon) || "null" %>
+    
+    if (!lat || !lng) {
+      return
+    }
+    
+    loc = { lat: lat, lng: lng };
+
+    clearMarker()
+    setPlace(map, "<%= @bert_tag.location.try(:name) %>", loc)
+    map.setCenter(loc);
+               
+    searchBox.addListener("places_changed", () => {
+      search(searchBox, map)
+    });
+  }
+</script>
+
+<%= form_with(model: bert_tag, local: true) do |form| %>
+  <% if bert_tag.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(bert_tag.errors.count, "error") %> prohibited this bert_tag from being saved:</h2>
+
+      <ul>
+      <% bert_tag.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<%= form.text_field :search_term, class: 'searchbox controls', id: 'pac-input' %>
+
+<div id="googleMap" style="width:100%;height:400px;"></div>
+  
+<script
+      src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_API_KEY'] %>&callback=initAutocomplete&libraries=places&v=weekly"
+      async
+    ></script>
+  
+  <br>
+  
+  <div class="actions">
+    <%= form.submit "Save", data: { confirm: "Are you sure?" } %>
+  </div>
+<% end %>

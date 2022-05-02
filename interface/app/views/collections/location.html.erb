@@ -1,0 +1,50 @@
+<% content_for :title, @location.name %>
+
+  <!-- Map Box -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.1/simple_statistics.js" integrity="sha256-hC7pS5IxrCj2NpLW8BHhjxcuqAzT9x8NV14WI4Agzlo=" crossorigin="anonymous"></script>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <meta name="robots" content="noindex,nofollow">
+  <script src="https://d3js.org/d3.v5.js"></script>
+  
+<p id="notice"><%= notice %></p>
+
+<div style="padding:10px; border-bottom: 1px solid darkgrey;">
+  <p>
+    <strong>Articles Count:</strong>
+    <%= @articles.count %>
+  </p>
+
+  <p>
+    <strong>Location Searched:</strong>
+    <%= @location.name %>
+  </p>
+
+  <p>
+    <strong>Location Returned:</strong>
+    <%= @location.formatted_address %>
+  </p>
+
+  <p>
+    <strong>County:</strong>
+    <%= link_to @location.county.try(:name), @location.county %>
+  </p>
+</div>
+
+  <% @articles.each do |article| %>
+  <div style="padding:10px; border-bottom: 1px solid darkgrey;">
+    <p>
+      <%= link_to article.title, article.source_url, target: "_blank" %>
+    </p>
+
+    <p>
+      <i>Filed on <%= article.published_at.to_s %></i>
+    </p>
+
+    <p>
+      <%= article.topics.pluck(:name).to_sentence %>
+    </p>
+
+  </div>
+  <% end %>
+
+

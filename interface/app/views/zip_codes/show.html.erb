@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @zip_code.zcta5ce10 %>
+</p>
+
+<p>
+  <strong>Locations:</strong>
+  <table>
+
+    <tbody>
+      <% @zip_code.locations.each do |location| %>
+        <tr>
+          <td><%= link_to location.name, location %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</p>
+
+
+<%= link_to 'Back', states_path %>

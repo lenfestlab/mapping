@@ -1,0 +1,180 @@
+<% content_for :title, @location.name %>
+
+  <!-- Map Box -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.1/simple_statistics.js" integrity="sha256-hC7pS5IxrCj2NpLW8BHhjxcuqAzT9x8NV14WI4Agzlo=" crossorigin="anonymous"></script>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <meta name="robots" content="noindex,nofollow">
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.0/mapbox-gl.js'></script>
+  <script src="https://d3js.org/d3.v5.js"></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.0/mapbox-gl.css' rel='stylesheet' />
+  <script src='https://api.mapbox.com/mapbox.js/plugins/turf/v2.0.2/turf.min.js'></script>
+  
+<p id="notice"><%= notice %></p>
+
+<%= link_to 'Edit', edit_location_path(@location) %> |
+<%= link_to 'Back', locations_path %>
+
+<p>
+  <strong>Name:</strong>
+  <%= @location.name %>
+</p>
+
+
+<p>
+  <strong>County:</strong>
+  <%= link_to @location.county.try(:name), @location.county %>
+</p>
+
+<p>
+  <strong>Formatted Address:</strong>
+  <%= @location.formatted_address %>
+</p>
+
+<p>
+  <strong>Bias:</strong>
+  <%= @location.bias %>
+</p>
+
+<% if @location.results.present? %>
+
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.css" rel="stylesheet">
+<div id="map"></div>
+
+<style>
+  #map {
+      width: 100%;
+      height: 400px;
+  }
+  
+</style>
+
+<script>
+  mapboxgl.accessToken = '<%= ENV['MAPBOX_ACCESS_TOKEN'] %>';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [-98.35, 49.50],
+        zoom: 2
+    });
+
+    map.on('load', function() {
+            
+      var locationGeojson = {
+      // feature for Mapbox DC
+      'type': 'Feature',
+      'geometry': <%= raw @location.results['geojson'].to_json %>,
+      'properties': {
+      'title': "<%= @location.name %>",
+      'icon': 'monument'
+        }      
+      }
+      
+      var bbox = turf.extent(locationGeojson);
+      
+      map.addSource('points', {
+      'type': 'geojson',
+      'data': locationGeojson
+      });
+            
+      <% if @location.geometry_type == "Point" %>
+      
+      map.addLayer({
+      'id': 'points',
+      'type': 'symbol',
+      'source': 'points',
+      'layout': {
+      // get the icon name from the source's "icon" property
+      // concatenate the name to get an icon from the style's sprite sheet
+      'icon-image': ['concat', ['get', 'icon'], '-15'],
+      // get the title name from the source's "title" property
+      'text-field': ['get', 'title'],
+      'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+      'text-offset': [0, 0.6],
+      'text-anchor': 'top'
+      }
+      });
+      
+      <% else %>
+
+      map.addLayer({
+      'id': 'points',
+      'type': 'fill',
+      'source': 'points',
+      'paint': {
+          'fill-color': '#FF0000',
+          'fill-opacity': 0.8
+      },
+      'layout': {}
+      });
+      
+      <% end %>      
+
+        <% if @location.county %>
+        var geojson = {
+              'type': 'Feature',
+              'geometry': <%= raw @location.county.geojson.to_json %>
+            }
+        bbox = turf.extent(geojson);
+        
+        map.addSource('county', {
+            'type': 'geojson',
+            'data': geojson
+        });
+        map.addLayer({
+            'id': 'county',
+            'type': 'fill',
+            'source': 'county',
+            'layout': {},
+            'paint': {
+                'fill-color': '#088',
+                'fill-opacity': 0.5
+            }
+        });
+
+        <% end %>
+        map.fitBounds(bbox, {padding: 20});        
+    });
+</script>
+
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @location.articles.each do |article| %>
+      <tr>
+        <% if article.collection %>
+        <td><%= link_to article.collection.try(:name), article.collection %></td>
+        <% else %>
+        <td></td>
+        <% end %>
+        <td><%= link_to article.title, article %></td>
+        <td><%= article.authors.pluck(:name) %></td>
+        <td><%= link_to 'Edit', edit_article_path(article) %></td>
+        <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p>
+  <strong>Results:</strong>
+  <pre style="background: #00264d;"><%= JSON.pretty_generate(@location.results) %></pre>
+</p>
+
+<p>
+  <strong>OSM:</strong>
+  <pre><%= JSON.pretty_generate(@location.osm_results) %></pre>
+</p>
+
+<p>
+  <strong>Google:</strong>
+  <pre style="background: #054202;"><%= JSON.pretty_generate(@location.google_results) %></pre>
+</p>

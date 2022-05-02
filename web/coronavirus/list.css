@@ -1,0 +1,107 @@
+.state {
+    color: #0d2c78;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.header {
+    color: #0d2c78;
+    font-weight: bold;
+    font-size: 20px;
+    padding-bottom: 4px;
+}
+
+.orange {
+    border-radius: 5px;
+    border: 2px solid #ff671f;
+    padding: 20px;
+}
+
+.list {
+    padding-top: 20px;
+}
+
+.col, .col-6, .col-4, .col-12, .col-md-12, .col-lg-6, .col-lg-4, .col-md-4 {
+    padding: 0 0 3 0 !important;
+}
+
+body {
+    background-image: url("/images/logo-lg.png");
+    background-position: center 50px;
+    background-repeat: no-repeat;
+    font-family: "Gotham Narrow SSm A","Gotham Narrow SSm B","Arial",sans-serif;
+    font-size: 18px;
+}
+
+.main {
+    padding: 30px;
+    padding-top: 120px !important;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+      background-position: center 40px;
+      background-image: url("/images/logo-sm.png");
+      font-size: 16px;
+  }
+  
+  .main {
+      padding-top: 80px !important;
+      padding-left: 20px !important;
+      padding-right: 20px !important;
+  }
+}
+
+.feedback {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+
+.article {
+  margin-left: 10px;
+  margin-bottom: 20px;
+}
+
+.snippet {
+  font-style: italic;
+  font-size: 16px;
+  color: #706c61;
+}
+
+.feedback a {
+  color: gray;
+}
+
+a {
+    color: black;
+    text-decoration: underline;
+}
+
+.btn-jump {
+    position: fixed;
+    bottom: 20px;
+    right: 0px;
+    background-color: #0d2c78;
+    color: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px 0px 0px 5px;
+    border: 2px solid #0d2c78;
+}
+
+.btn-jump:focus {outline:0;}
+
+/*Dark Blue - #16183a
+LightBlue - #0d2c78
+Orange - # ff671f
+White - #ffffff
+
+
+
+
+
+6:35
+Fonts:“Gotham Narrow SSm A”,“Gotham Narrow SSm B”,“Arial”,sans-serif”*/

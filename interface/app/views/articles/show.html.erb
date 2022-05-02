@@ -1,0 +1,94 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong><%= @article.title %></strong>
+</p>
+<p>
+  <strong>Location Bias:</strong>
+  <%= @article.location_bias %>
+</p>
+
+<p>
+  <strong>Analytics Channel:</strong>
+  <%= @article.analytics_channel %>
+</p>
+
+<p>
+  <strong>Identifier:</strong>
+  <%= @article.identifier %>
+</p>
+
+<p>
+  <strong>Response:</strong>
+  <pre><%= JSON.pretty_generate(@article.response) %></pre>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= simple_format(@article.content) %>
+</p>
+
+<p>  
+  <strong>Sentences:</strong>
+  <% @article.sentences.order("position").each do |sentence| %>
+  <div style="background-color:#F5F5F5; padding:10px; margin-top: 20px;">
+    <%= link_to sentence.content, sentence %> (Bert Model Results: <%= sentence.response['bert_tags'].to_json %>)
+    <% if sentence.bert_tags.count > 0 %>
+    
+    <table style="padding:10px; margin-top: 20px;">
+      <tbody>
+        <% sentence.bert_tags.each do |bert_tag| %>
+          <tr><td><%= bert_tag.content %></td></tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% end %>
+  </div>        
+  <% end %>
+</p>
+
+<p>
+  <strong>Locations:</strong>
+  <table>
+
+    <tbody>
+      <% @article.locations.uniq.each do |location| %>
+        <tr>
+          <td><%= link_to location.name, location %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</p>
+
+<p>
+  <strong>Topics:</strong>
+  <table>
+
+    <tbody>
+      <% @article.topics.each do |topic| %>
+        <tr>
+          <td><%= link_to topic.name, topic %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</p>
+
+<p>
+  <strong>Authors:</strong>
+  <table>
+
+    <tbody>
+      <% @article.authors.each do |author| %>
+        <tr>
+          <td><%= author.name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</p>
+
+
+<%= link_to 'Edit', edit_article_path(@article) %> |
+<%= link_to 'Back', articles_path %>

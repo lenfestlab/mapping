@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Articles</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Collection</th>
+      <th>Published</th>
+      <th>Author</th>
+      <th>Title</th>
+      <th>Locations Count</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @articles.each do |article| %>
+      <tr>
+        <% if article.collection %>
+        <td><%= link_to article.collection.try(:name), article.collection %></td>
+        <% else %>
+        <td></td>
+        <% end %>
+        <td><%= article.published_at %></td>
+        <td><%= article.authors.pluck(:name) %></td>
+        <td><%= link_to article.title, article %></td>
+        <td><%= article.article_locations_count %></td>
+        <td><%= link_to 'Edit', edit_article_path(article) %></td>
+        <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @articles %>
+
+<p>
+  Download:
+  <%= link_to "CSV", articles_path(format: "csv") %>
+</p>
+
+<br>
+
+<%= link_to 'New Article', new_article_path %>

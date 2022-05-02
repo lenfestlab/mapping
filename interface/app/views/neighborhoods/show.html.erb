@@ -1,0 +1,93 @@
+  <!-- Map Box -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.1/simple_statistics.js" integrity="sha256-hC7pS5IxrCj2NpLW8BHhjxcuqAzT9x8NV14WI4Agzlo=" crossorigin="anonymous"></script>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <meta name="robots" content="noindex,nofollow">
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.0/mapbox-gl.js'></script>
+  <script src="https://d3js.org/d3.v5.js"></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.0/mapbox-gl.css' rel='stylesheet' />
+  <script src='https://api.mapbox.com/mapbox.js/plugins/turf/v2.0.2/turf.min.js'></script>
+    
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @county.description %>
+</p>
+
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.css" rel="stylesheet">
+<div id="map"></div>
+
+<p>
+  <strong>Locations:</strong>
+  <% @county.locations.each do |location| %>
+            <p style="margin-left: 40px;"><%= link_to location.name, location %></p>
+            <% location.articles.each do |article| %>
+                <p style="margin-left: 80px;"><%= link_to article.title, article %></p>
+            <% end %>
+  <% end %>
+</p>
+<style>
+  #map {
+      width: 100%;
+      height: 400px;
+  }
+  
+</style>
+
+<script>
+  mapboxgl.accessToken = '<%= ENV['MAPBOX_ACCESS_TOKEN'] %>';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [-98.35, 49.50],
+        zoom: 2
+    });
+
+    map.on('load', function() {
+        map.addSource('county', {
+            'type': 'geojson',
+            'data': {
+                'type': 'Feature',
+              'geometry': <%= raw @county.geojson.to_json %>
+
+            }
+        });
+        map.addLayer({
+            'id': 'county',
+            'type': 'fill',
+            'source': 'county',
+            'layout': {},
+            'paint': {
+                'fill-color': '#088',
+                'fill-opacity': 0.8
+            }
+        });
+        <% if @county.state %>
+        var geojson = {
+              'type': 'Feature',
+              'geometry': <%= raw @county.state.geojson.to_json %>
+            }
+        var bbox = turf.extent(geojson);
+        
+        map.addSource('state', {
+            'type': 'geojson',
+            'data': geojson
+        });
+        map.addLayer({
+            'id': 'state',
+            'type': 'fill',
+            'source': 'state',
+            'layout': {},
+            'paint': {
+                'fill-color': '#870000',
+                'fill-opacity': 0.1
+            }
+        });
+
+        map.fitBounds(bbox, {padding: 20});        
+        <% end %>
+    });
+</script>
+
+
+<%= link_to 'Back', states_path %>

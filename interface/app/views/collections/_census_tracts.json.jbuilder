@@ -1,0 +1,1 @@
+json.extract! census_tract, :ogc_fid, :name, :geoid, :namelsad

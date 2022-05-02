@@ -1,0 +1,81 @@
+<html>
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ google_tracking_id }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', '{{ google_tracking_id }}', {
+      'custom_map': {
+       'dimension1': 'cd1',
+       'dimension2': 'cd2',
+       'dimension3': 'cd3',
+      },
+      'linker': {
+        'domains': ['covid-lenfest.herokuapp.com']
+      }
+    });
+  </script>
+
+  
+  <!-- Heap Analytics -->
+  <script type="text/javascript">
+    window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=document.createElement("script");r.type="text/javascript",r.async=!0,r.src="https://cdn.heapanalytics.com/js/heap-"+e+".js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(r,a);for(var n=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","resetIdentity","removeEventProperty","setEventProperties","track","unsetEventProperty"],o=0;o<p.length;o++)heap[p[o]]=n(p[o])};
+    heap.load("{{ heap_app_id }}");
+  </script>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+  <!-- Underscore.js -->
+  <script src="https://cdn.jsdelivr.net/npm/underscore@1.11.0/underscore-min.js"></script>
+  
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha256-L/W5Wfqfa0sdBNIKN9cG6QA5F2qx4qICmU2VgLruv9Y=" crossorigin="anonymous" />
+  <script src="/javascripts/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="/stylesheets/list.css?v=4">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js" integrity="sha256-xljKCznmrf+eJGt+Yxyo+Z3KHpxlppBZSjyDlutbOh0=" crossorigin="anonymous"></script>  
+  <script src="https://d3js.org/d3.v5.js"></script>
+  <script src="/javascripts/trends.js?v=1"></script>
+  <script src="/javascripts/list.js?v=10"></script>
+  <script src="/javascripts/page.js?v=3"></script>
+  <script src="/javascripts/header.js?v=2"></script>
+  <script src="/javascripts/track.js?v=2"></script>
+  <script src="/javascripts/jquery.scrolldepth.min.js"></script>
+  <script>
+  jQuery(function() {
+    jQuery.scrollDepth({
+      eventHandler: function(data) {
+        if (data.event == "ScrollDistance" && data.eventAction == "Percentage") {
+          track('scroll depth', 'navigation', data.eventLabel, undefined, undefined, undefined, true);
+        }
+      }
+    });
+  });
+  </script>
+</head>
+<body>
+  <div class="Rectangle-2"></div>
+  <div class="main container">
+  <div class="content container">Loading...</div></div>
+  
+  <a class="btn-fixed btn-feedback" onclick="track('feedback', 'navigation');" target="_blank" href="https://docs.google.com/forms/u/0/d/1-xFOkbyPE9cmKpdGOUTfXWXP_kOfwr32z0RJnX8s_vQ/viewform?edit_requested=true" role="button"><img src="/images/feedback-icon.png">Feedback</a>
+  
+  <button onclick="topFunction()" type="button" class="btn-fixed btn-jump"><img src="/images/triangle-icon.png">Back To Top</button>
+  <div class='footer'>
+    This project was developed by The Inquirer, the <a target="_blank" href='https://www.lenfestinstitute.org/lenfest-local-lab/' >Lenfest Local Lab</a> and the <a target="_blank" href='https://brown.columbia.edu/' >Brown Institute</a>.
+</div>
+</body>
+</html>

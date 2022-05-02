@@ -1,0 +1,43 @@
+  <!-- Map Box -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.1/simple_statistics.js" integrity="sha256-hC7pS5IxrCj2NpLW8BHhjxcuqAzT9x8NV14WI4Agzlo=" crossorigin="anonymous"></script>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <meta name="robots" content="noindex,nofollow">
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.0/mapbox-gl.js'></script>
+  <script src="https://d3js.org/d3.v5.js"></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.0/mapbox-gl.css' rel='stylesheet' />
+  <script src='https://api.mapbox.com/mapbox.js/plugins/turf/v2.0.2/turf.min.js'></script>
+    
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @topic.name %>
+</p>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Published</th>
+      <th>Author</th>
+      <th>Title</th>
+      <th>Locations Count</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @topic.articles.each do |article| %>
+      <tr>
+        <td><%= article.published_at %></td>
+        <td><%= article.authors.pluck(:name) %></td>
+        <td><%= link_to article.title, article %></td>
+        <td><%= article.article_locations_count %></td>
+        <td><%= link_to 'Edit', edit_article_path(article) %></td>
+        <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back', states_path %>

@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Census Tracts</h1>
+
+<table>
+
+  <tbody>
+    <% @census_tracts.each do |census_tract| %>
+      <tr>
+        <td><%= census_tract.namelsad %>
+            <% census_tract.locations.each do |location| %>
+                <p style="margin-left: 40px;"><%= link_to location.name, location %></p>
+                <% location.articles.where("articles.id IN (?)", @collection.articles.pluck(:id)).each do |article| %>
+                    <p style="margin-left: 80px;"><%= link_to article.title, article %></p>
+                <% end %>
+            <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

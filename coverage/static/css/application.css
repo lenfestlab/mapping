@@ -1,0 +1,125 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%
+}
+
+td,th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd
+}
+
+body {
+    background-color: #fff;
+    color: #333;
+    margin: 33px;
+    font-family: verdana, arial, helvetica, sans-serif;
+    font-size: 13px;
+    line-height: 18px
+}
+
+p,ol,ul,td {
+    font-family: verdana, arial, helvetica, sans-serif;
+    font-size: 13px;
+    line-height: 18px
+}
+
+pre {
+    background-color: #eee;
+    padding: 10px;
+    font-size: 11px
+}
+
+a {
+    color: #000
+}
+
+a:visited {
+    color: #666
+}
+
+a:hover {
+    color: #fff;
+    background-color: #000
+}
+
+th {
+    padding-bottom: 5px
+}
+
+td {
+    padding: 0 5px 7px
+}
+
+div.field,div.actions {
+    margin-bottom: 10px
+}
+
+#notice {
+    color: green
+}
+
+.field_with_errors {
+    padding: 2px;
+    background-color: red;
+    display: table
+}
+
+#error_explanation {
+    width: 450px;
+    border: 2px solid red;
+    padding: 7px 7px 0;
+    margin-bottom: 20px;
+    background-color: #f0f0f0
+}
+
+#error_explanation h2 {
+    text-align: left;
+    font-weight: bold;
+    padding: 5px 5px 5px 15px;
+    font-size: 12px;
+    margin: -7px -7px 0;
+    background-color: #c00;
+    color: #fff
+}
+
+#error_explanation ul li {
+    font-size: 12px;
+    list-style: square
+}
+
+label {
+    display: block
+}
+
+p {
+    font-family: Georgia, serif
+}
+
+pre {
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word
+}
+
+pre {
+    background: #383838;
+    border: 1px solid #ddd;
+    color: white;
+    page-break-inside: avoid;
+    font-family: monospace;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word
+}

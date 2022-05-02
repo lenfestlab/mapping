@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Zip Codes</h1>
+
+<table>
+
+  <tbody>
+    <% @zip_codes.each do |zip_code| %>
+      <tr>
+        <td><%= link_to zip_code.zcta5ce10, zip_code %>
+            <% zip_code.locations.each do |location| %>
+                <p style="margin-left: 40px;"><%= link_to location.name, location %></p>
+                <% location.articles.each do |article| %>
+                    <p style="margin-left: 80px;"><%= link_to article.title, article %></p>
+                <% end %>
+            <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

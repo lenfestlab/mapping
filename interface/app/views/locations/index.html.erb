@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Locations</h1>
+
+<p>
+<%= form_tag(locations_path, method: :get) do %>
+  <%= text_field_tag :search, params[:search] %>
+  <%= submit_tag 'Search' %>
+<% end %>
+</p>
+
+<table>
+
+  <tbody>
+    <% @locations.each do |location| %>
+      <tr>
+        <td><%= link_to location.name, location %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @counties %>
+
+<br>
+
+<%= link_to 'New Location', new_location_path %>

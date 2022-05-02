@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>County</h1>
+
+<table>
+
+  <tbody>
+    <% @counties.each do |county| %>
+      <tr>
+        <td><%= link_to "#{county.id}. #{county.description}", county %>
+            <% county.locations.each do |location| %>
+                <% ids = ArticleLocation.where("location_id = ?", location.id).pluck(:article_id) %>
+                <% if ids.count > 0 %>
+                  <% articles = Article.where("id IN (?)", ids) %>
+                  <% if params[:before] %>
+                  <%  articles = articles.before(params[:before]) %>
+                  <% end %>
+                  <% if params[:after] %>
+                  <%  articles = articles.after(params[:after]) %>
+                  <% end %>
+                  <% if articles.count > 0 %>
+                    <p style="margin-left: 40px;"><%= link_to location.name, location %> -> <%= location.formatted_address %> (<%= articles.count %>)</p>
+                    <% articles.each do |article| %>
+                        <p style="margin-left: 80px;">
+                          <% if article.published_at %>
+                          <b><%= article.published_at.strftime('%a %b %e, %H:%M:%S %Z %Y') %></b> -
+                          <% end %>
+                          <% if article.source_url %>
+                          <%= link_to article.title, article.source_url, target: :_blank  %>
+                          <% else %>
+                          <%= article.title %>
+                          <% end %>  
+                          (<%= link_to "data", article %>)
+                        </p>
+                    <% end %>
+                  <% end %>
+                <% end %>
+            <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @counties %>

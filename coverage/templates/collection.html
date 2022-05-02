@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Mapping Visualization
+    </title>
+    <meta name="csrf-param" content="authenticity_token">
+    <meta name="csrf-token" content="dF3pZZzxRj+b0afYWZOZGA+Zu3aVcoG3plUCdoc5ElZO/BtZG3slFaqST9ns2fU40MI0cVNGu3EZWp8IFXaYNw==">
+    <link rel="stylesheet" media="all" href="/static/css/application.css" data-turbolinks-track="reload">
+    
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/css/template.css">
+    
+    <!-- Map Box -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.1/simple_statistics.js" integrity="sha256-hC7pS5IxrCj2NpLW8BHhjxcuqAzT9x8NV14WI4Agzlo=" crossorigin="anonymous"></script>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'>
+    <meta name="robots" content="noindex,nofollow">
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.0/mapbox-gl.js'></script>
+    <script src="https://d3js.org/d3.v5.js"></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.0/mapbox-gl.css' rel='stylesheet'>
+    <script type='text/javascript' src='/static/js/network.js'></script>
+    <script type='text/javascript' src="/static/js/store.js"></script>
+    <script type='text/javascript' src="/static/js/filter.js"></script>
+    <script>
+      mapboxgl.accessToken = '{{mapbox_access_token}}';  
+    </script>
+    <script type='text/javascript' src="/static/js/map.js"></script>
+    <script type='text/javascript' src="/static/js/layers.js"></script>
+    <script type='text/javascript' src="/static/js/api.js"></script>
+    <script type='text/javascript' src="/static/js/index.js"></script>
+    <script>
+      function Article(data) {
+        this.metaData = data
+        this.id = data.identifier
+        this.people = data.people
+        this.author_ids = data.author_ids
+        this.topic_ids = data.topic_ids
+        this.headline = data.title
+        this.website = data.source_url
+        this.image = data.thumbnail
+        this.publishedAt = data.published_at
+        this.counties = data.counties
+        this.census_tracts = data.census_tracts
+        this.neighborhoods = data.neighborhoods
+      }
+      
+      function reloadData(pointsURL) {
+        var collectionId = {{collectionId}}
+        
+        d3.json("https://lenfest-mapping.herokuapp.com/collections/" + collectionId + ".json").then(function (data) {
+
+          var center = [parseFloat(data.lng), parseFloat(data.lat) ]
+          var maxBounds = [[-80.521, 37.068], [-69.842, 42.514]]
+          var title = data.name
+                
+          loadData(collectionId, center, maxBounds, title, pointsURL)
+        });
+        
+      }
+      
+      $(document).ready(function() {  
+        let pointsURL = "https://lenfest-mapping.herokuapp.com/collections/{{collectionId}}/points.json?"
+        reloadData(pointsURL)
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col header"></div>
+      </div>
+      <div class="row">
+        <div id="map" class="col-lg-9 order-12" style="height:1100px;">
+          <div class="legend">
+            <div id="neighborhoods-legend" style="display: block;"></div>
+            <div id="census-legend" style="display: none;"></div>
+            <div id="counties-legend" style="display: none;"></div>
+          </div>
+        </div>
+        <div class="col-lg-3 order-1">
+          <h4>
+            Map Filters
+          </h4>
+          <div class="map-filters"></div><button type="button" class="btn btn-primary btn-md btn-block" onclick="applyFilters()">Apply</button><br>
+          <h4>
+            Map Views
+          </h4>
+          <h5>
+            Location
+          </h5>
+          <div id="layer-controls"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col results-overview"></div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="list-group" id="articles-list"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

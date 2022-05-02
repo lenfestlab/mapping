@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Counties</h1>
+
+<table>
+
+  <tbody>
+    <% @counties.each do |county| %>
+      <tr>
+        <td><h3><%= link_to "#{county.description}", county %></h3>
+            <% county.locations.each do |location| %>
+                <% article_locations = ArticleLocation.joins(:article).where("location_id = ? AND collection_id = ?", location.id, @collection.id) %>
+                <% if params[:before] %>
+                <%  article_locations = article_locations.before(params[:before]) %>
+                <% end %>
+                <% if params[:after] %>
+                <%  article_locations = article_locations.after(params[:after]) %>
+                <% end %>
+                <% count = article_locations.count %>
+                <% if count > 0 %>
+                  <p><%= link_to location.name, location %> -> <%= location.formatted_address %></p>
+                  <% article_locations.each do |article_location| %>
+                      <div style="margin-left: 40px; font-size: 12px">
+                        <div style="toppadding: 10px; font-size: 14px">
+                          <% if article_location.article.published_at %>
+                          <b><%= article_location.article.published_at.strftime('%a %b %e, %H:%M:%S %Z %Y') %></b> -
+                          <% end %>
+                          <% if article_location.article.source_url %>
+                          <%= link_to article_location.article.title, article_location.article.source_url, target: :_blank  %>
+                          <% else %>
+                          <%= article_location.article.title %>
+                          <% end %>
+                        </div>
+                        <div style="padding-top: 3px; padding-bottom: 5px;">
+                        <span style="color: gray; padding: 10px;"><%= article_location.snippet.html_safe %></span>                      
+                        </div>
+                        <div style="toppadding: 10px;">
+                          <span style="background-color: #FFFFCC; margin-right:5px;">
+                          <%= link_to "View Data", article_location.article, style: "text-decoration: none; font-size: 12px" %>
+                          </span>
+                          <span style="background-color: #FFBAD2; margin-right:5px;">
+                          <%= link_to 'Destroy Location Reference', article_location, method: :delete, data: { confirm: 'Are you delete the connection between the article and this location?' }, style: "text-decoration: none;" %>
+                          </span>
+                        </div>
+                      </div>
+                  <% end %>
+                <% end %>
+            <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @counties %>

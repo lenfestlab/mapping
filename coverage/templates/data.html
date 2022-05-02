@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>
+      Display a map on a webpage
+    </title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/turf/v2.0.2/turf.min.js'></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <link href="/static/css/data.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id='map'></div>
+    <script type='text/javascript' src='/static/js/api.js'></script> 
+    <script type='text/javascript' src='/static/js/data.js'></script> 
+    <script type='text/javascript' src="/static/js/index.js"></script> 
+    <script>
+
+
+    let pointsURL = "{{pointsURL|safe}}"
+    getAllFeatures(pointsURL).then( response => {
+      
+      // Add a GeoJSON source with 2 points
+      map.addSource('points_source', {
+      'type': 'geojson',
+      'data': response
+      });
+
+      map.addLayer({
+          'id': 'points',
+          'type': 'circle',
+          'source': 'points_source',
+          'paint': {
+              'circle-radius': {
+                  'base': 1,
+                  'stops': [[14, 2], [22, 30]]
+              }
+          }
+      });
+
+    });
+
+
+    mapboxgl.accessToken = '{{mapbox_access_token}}';
+    const map = new mapboxgl.Map({
+        container: 'map', // container ID
+        style: 'mapbox://styles/mapbox/light-v10', // style URL
+        center: [-75.1652, 39.9526], // starting position
+        zoom: 8 // starting zoom
+    });
+
+    var sourceName = '{{dataSource}}';
+    var filter = ['==', 'GEOID', '{{geoId}}'];
+
+    map.on('load', function () {
+      addGeojson(sourceName)
+      diplayLayer(sourceName)
+      map.setFilter(sourceName, filter);
+    });
+
+    var popup = new mapboxgl.Popup({
+        closeButton: true,
+        closeOnClick: false
+    });
+
+    map.on('mouseenter', 'points', function (e) {
+        // Change the cursor style as a UI indicator.
+        var collection_id = 13
+        var feature = e.features[0]
+        var coordinates = feature.geometry.coordinates.slice();
+        var src = "https://lenfest-mapping.herokuapp.com/collections/" + collection_id + "/locations/" + feature.id
+        var htmlContent = '<iframe style="width: 100%; height: 100%; margin: none; padding: none; border: none;" src="' + src + '"></iframe>';
+
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup.setLngLat(coordinates)
+            .setHTML(htmlContent)
+            .addTo(map);
+
+    });
+
+    var bbox;
+
+    map.on("idle", function(e) {
+      zoom();
+    });
+
+    var zoom = (function() {
+        var executed = false;
+        return function() {
+            if (!executed && bbox) {
+                executed = true;
+                // do something
+                map.fitBounds(bbox, {
+                  padding: 50
+                });
+            }
+        };
+    })();
+
+    map.on("sourcedata", function(e) {
+        if (e.sourceDataType != "metadata" && e.sourceId == sourceName && map.getSource(sourceName) && map.isSourceLoaded(sourceName)) {
+            const features = map.querySourceFeatures(sourceName,  { 
+              sourceLayer: 'original',
+              filter: filter
+            });
+            if (features.length > 0) {
+              bbox = turf.extent({
+                type: 'FeatureCollection',
+                features: features
+              });
+            }
+        }
+
+    });
+
+    </script>
+  </body>
+</html>

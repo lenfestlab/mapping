@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Featured</h1>
+<% article_ids = @collection.articles.pluck(:id) %>
+<table>
+
+  <tbody>
+    <% @counties.each do |county| %>
+      <tr>
+        <td><%= link_to county.description, county %>
+            <% county.locations.each do |location| %>
+                <% ids = article_ids & ArticleLocation.where("location_id = ?", location.id).pluck(:article_id) %>
+                <% if ids.count > 0 %>
+                  <p style="margin-left: 40px;"><%= link_to location.name, location %> -> <%= location.formatted_address %> (<%= ids.count %>)</p>
+                  <% Article.where("id IN (?)", ids).each do |article| %>
+                      <p style="margin-left: 80px;"><%= link_to article.title, article %></p>
+                  <% end %>
+                <% end %>
+            <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

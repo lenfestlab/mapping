@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong><%= @article_location.article.title %></strong>
+</p>
+
+<p>
+  <strong><%= link_to @article_location.location.try(:name), @article_location.location %></strong>  
+</p>
+
+<p>
+  <strong><%= @article_location.comment %></strong>
+</p>
+
+<p>
+  <strong><%= @article_location.flagged %></strong>
+</p>
+
+<%= link_to 'Edit', edit_article_location_path(@article_location) %> |
+<%= link_to 'Back', article_locations_path %>

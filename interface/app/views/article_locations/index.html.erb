@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Article Locations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Identifier</th>
+      <th>Article Id</th>
+      <th>Location</th>
+      <th>County</th>
+      <th>Snippet</th>
+      <th>Comment</th>
+      <th width=100>Flag</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @article_locations.each do |article_location| %>
+      <tr>
+        <td><%= link_to article_location.id, edit_article_location_path(article_location) %></td>
+        <td><%= link_to article_location.article.id, article_location.article %></td>
+        <td><%= link_to article_location.location.name, article_location.location %></td>
+        <td><%= link_to article_location.location.county.try(:name) || "", article_location.location.county %></td>
+        <td><%= article_location.snippet %></td>
+        <td><%= article_location.comment %></td>
+        <td><%= article_location.flag.try(:reason) || article_location.location.flag.try(:reason) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @article_locations %>

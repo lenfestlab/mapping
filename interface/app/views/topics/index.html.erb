@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+<h1>County</h1>
+
+<table>
+
+  <tbody>
+    <% @topics.each do |topic| %>
+      <tr>
+        <td><%= link_to topic.name, topic %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @counties %>

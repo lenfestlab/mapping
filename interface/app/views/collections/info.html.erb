@@ -1,0 +1,68 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @collection.name %>
+</p>
+
+<p>
+  <strong>Article Count:</strong>
+  <%= @collection.articles.count %>
+</p>
+
+<p>
+  <strong>Tagged Article Count:</strong>
+  <%= @collection.articles.count %>
+</p>
+
+<p>
+  <strong>Analytics Channel:</strong>
+  <% channels = @collection.articles.group(:analytics_channel).count %>
+  <% labels = channels.keys.map{ |channel| "'" + channel.to_s + "'" }.join(',') %>
+  <% data =  channels.values.join(',') %>
+  <br><img src="https://quickchart.io/chart?bkg=white&c={type:%27bar%27,data:{labels:[<%= labels %>],datasets:[{label:%27Articles%27,data:[<%= data %>]}]}}">
+  <pre><%= JSON.pretty_generate(channels) %></pre>
+</p>
+
+<p>
+  <strong>DOW:</strong>
+  
+  <%
+    
+  select = "id, to_char(published_at, 'D') as year_month"
+  collection_hash = {}; 
+
+  @collection.articles.select(select).order("year_month").each { |a| collection_hash[a.year_month] = 1 + collection_hash[a.year_month].to_i }; 0;
+    
+  %>
+  
+  <% labels = collection_hash.keys.map{ |date| "'" + date + "'" }.join(',') %>
+  <% data =  collection_hash.values.join(',') %>
+  <br><img src="https://quickchart.io/chart?bkg=white&c={type:%27bar%27,data:{labels:[<%= labels %>],datasets:[{label:%27Articles%27,data:[<%= data %>]}]}}">
+  <pre><%= JSON.pretty_generate(collection_hash) %></pre>
+</p>
+
+<p>
+  <strong>Months:</strong>
+  <% months = @collection.articles.order("date_trunc('year', published_at), date_trunc('month', published_at)").group("date_trunc('year', published_at), date_trunc('month', published_at)").count %>
+  <% labels = months.keys.map{ |date| "'" + date.strftime("%b %Y") + "'" }.join(',') %>
+  <% data =  months.values.join(',') %>
+  <br><img src="https://quickchart.io/chart?bkg=white&c={type:%27bar%27,data:{labels:[<%= labels %>],datasets:[{label:%27Articles%27,data:[<%= data %>]}]}}">
+  <pre><%= JSON.pretty_generate(months) %></pre>
+</p>
+
+<p>
+  <strong>Day of week:</strong>
+  <% dow = @collection.articles.order("extract(dow from published_at)").group("extract(dow from published_at)").count %>
+  <% labels = dow.keys.map{ |d| "'" + d.to_i.to_s + "'" }.join(',') %>
+  <% data =  dow.values.join(',') %>
+  <br><img src="https://quickchart.io/chart?bkg=white&c={type:%27bar%27,data:{labels:[<%= labels %>],datasets:[{label:%27Articles%27,data:[<%= data %>]}]}}">
+  <pre><%= JSON.pretty_generate(dow) %></pre>
+</p>
+
+<p>
+  <strong>Days:</strong>
+  <% days = @collection.articles.group(:published_at).count %>
+  <pre><%= JSON.pretty_generate(days) %></pre>
+</p>
+

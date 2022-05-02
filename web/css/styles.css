@@ -1,0 +1,62 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#map {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
+
+.mapboxgl-popup {
+max-width: 400px;
+font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+text-overflow: ellipsis;
+}
+
+
+.legend {
+background-color: #fff;
+border-radius: 3px;
+bottom: 50px;
+box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+padding: 10px;
+position: absolute;
+right: 10px;
+z-index: 1;
+}
+
+.legend h4 {
+margin: 0 0 10px;
+}
+
+.legend div span {
+border-radius: 50%;
+display: inline-block;
+height: 10px;
+margin-right: 5px;
+width: 10px;
+}
+
+#note {
+  position: fixed;
+  bottom: 1em;
+  right: 10px;
+  z-index: 1;
+}
+
+#note p {
+  font-size: .5em;
+  background-color: #fff;
+  border-radius: .1em;
+  opacity: .7;
+  text-align: right;
+  color: #322D40;
+  font-family: sans-serif;
+  text-transform: uppercase;
+}

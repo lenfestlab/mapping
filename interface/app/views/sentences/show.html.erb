@@ -1,0 +1,77 @@
+<script type='text/javascript' src="/map.js"></script>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Sentence:</strong>
+  <%= highlight(@sentence.content, @sentence.bert_tags.pluck(:content)) %>
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Bert Tag</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sentence.bert_tags.each do |bert_tag| %>
+      <tr>
+        <td><%= bert_tag.content %> <%= link_to "Edit", edit_bert_tag_path(bert_tag) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+
+<script>
+  function initAutocomplete() {
+    const map = new google.maps.Map(document.getElementById("googleMap"), {
+      center: { lat: 39.952583, lng: -75.165222 },
+      zoom: 13,
+      mapTypeId: "roadmap",
+    });
+    // Create the search box and link it to the UI element.
+    const input = document.getElementById("pac-input");
+    const searchBox = new google.maps.places.SearchBox(input);
+
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener("bounds_changed", () => {
+      searchBox.setBounds(map.getBounds());
+    });
+     
+    clearMarker()
+     
+    bounds = new google.maps.LatLngBounds();
+    
+    <% @sentence.bert_tags.each do | bert_tag |  %>
+    loc = { lat: <%= bert_tag.location.try(:lat) || "0" %>, lng: <%= bert_tag.location.try(:lon) || "0" %>   };
+    setPlace(map, "<%= bert_tag.location.try(:name) %>", loc)
+    map.setCenter(loc);
+    <% end %>     
+    
+    map.fitBounds(bounds);
+               
+    searchBox.addListener("places_changed", () => {
+      search(searchBox, map)
+    });
+  }
+</script>
+  
+<div id="googleMap" style="width:100%;height:400px;"></div>
+  
+<script
+      src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_API_KEY'] %>&callback=initAutocomplete&libraries=places&v=weekly"
+      async
+    ></script>
+    
+<p>
+  <strong>Article: <%= link_to @sentence.article.id, @sentence.article %></strong>
+</p>
+
+<p>
+  <strong>Response:</strong>
+  <pre><%= JSON.pretty_generate(@sentence.response) %></pre>
+</p>
+

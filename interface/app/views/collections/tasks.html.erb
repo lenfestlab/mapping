@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @collection.name %>
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Published</th>
+      <th>Author</th>
+      <th>Title</th>
+      <th>Locations Count</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @articles.each do |article| %>
+      <tr>
+        <td><%= article.published_at %></td>
+        <td><%= article.authors.pluck(:name) %></td>
+        <td><%= link_to article.title, article %></td>
+        <td><%= article.article_locations_count %></td>
+        <td><%= link_to 'Edit', edit_article_path(article) %></td>
+        <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p>
+  Download:
+  <%= link_to "CSV", collection_path(@collection, format: "csv") %>
+</p>
+
+<%= link_to 'Edit', edit_collection_path(@collection) %> |
+<%= link_to 'Back', collections_path %> |
+<%= link_to 'Map', collection_path(@collection) + '/map' %> |
+<%= link_to 'Locations', collection_path(@collection) + '/locations' %>
