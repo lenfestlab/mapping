@@ -56,7 +56,7 @@ def evaluate():
   
   bert_tags = bert_model_predict.single_bert_prediction(model, text)
   
-  result = { "content" : text, "bert_tags": bert_tags, "test":"test" }
+  result = { "content" : text, "bert_tags": bert_tags }
   return jsonify(results = result)
   
 @app.route("/entities", methods=['POST'])
