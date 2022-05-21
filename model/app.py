@@ -29,26 +29,6 @@ def geojson():
     
   return result
   
-@app.route("/ner", methods=['POST'])
-def neri():
-  text = request.form.get('content')
-  text = urllib.parse.unquote_plus(text)
-
-  text = sai.preprocessing(text)
-  
-  entity_list = sai.ner(text)
-  entity_list_loc = sai.ner(text,False)
-  
-  entity_list_f = sai.postprocessing(entity_list)
-  entity_loc =  sai.process_loc(entity_list_loc)
-  l = (entity_list_f+entity_loc)
-  entity_list_f = [dict(t) for t in {tuple(d.items()) for d in l}]
-  extra = sai.get_locs(text)
-  
-  result = { "content" : text, "bert_tags": entity_list_f ,"locations_detailed":extra}
-  return jsonify(results = result) 
-  
-
 @app.route("/", methods=['POST'])
 def evaluate(text):
   # text = request.form.get('content')
