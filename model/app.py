@@ -3,18 +3,18 @@ import os
 import ast
 import pandas as pd
 import json
-from predict import sai
 from predict import data_prep
 from predict import bert_model_predict
 from cpu_modeling import from_pretrained
-from pytorch_pretrained_bert import BertForTokenClassification
+from transformers import BertForTokenClassification, AdamW
 import urllib.parse
 import geocoder
 import spacy
 
 nlp = spacy.load("en_core_web_sm")
 
-model = from_pretrained(BertForTokenClassification, "/storage/saved_model", num_labels=4)
+# model = from_pretrained(BertForTokenClassification, "noah-rush/inquirer-bert", num_labels=4)
+model = BertForTokenClassification.from_pretrained("noah-rush/inquirer-bert")
 
 app = Flask(__name__, static_url_path='')
 
@@ -50,12 +50,12 @@ def neri():
   
 
 @app.route("/", methods=['POST'])
-def evaluate():
-  text = request.form.get('content')
+def evaluate(text):
+  # text = request.form.get('content')
   text = urllib.parse.unquote_plus(text)
-  
-  bert_tags = bert_model_predict.single_bert_prediction(model, text)
-  
+  doc = nlp(text)
+  spacy_tokens = [token.text for token in doc]
+  bert_tags = bert_model_predict.single_bert_prediction(model, spacy_tokens)
   result = { "content" : text, "bert_tags": bert_tags }
   return jsonify(results = result)
   
@@ -89,3 +89,4 @@ def sentences():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
+    # evaluate('Has school reform broken the cycle of poverty in Camden , N.J. ?')
