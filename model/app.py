@@ -30,8 +30,8 @@ def geojson():
   return result
   
 @app.route("/", methods=['POST'])
-def evaluate(text):
-  # text = request.form.get('content')
+def evaluate():
+  text = request.form.get('content')
   text = urllib.parse.unquote_plus(text)
   doc = nlp(text)
   spacy_tokens = [token.text for token in doc]
