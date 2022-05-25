@@ -5,7 +5,7 @@ ruby '2.6.5'
 
 gem 'oj'
 gem 'blueprinter'
-
+gem 'nokogiri', '>= 1.13.6'
 
 # Authentication
 gem 'ffi', '~> 1.15.0'
