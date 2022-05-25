@@ -173,18 +173,18 @@ def single_bert_prediction(model, content):
         output['span_locs'] = span_locs
         output['span_orgs'] = span_orgs
 
-        locs = []
+        locs = set()
         for span in output['span_locs']:
             loc = ''
             for x in range(span[0], span[1]):
                 loc += output['sentence'][x] + ' '
-            locs.append(loc)
+            locs.add(loc)
         for span in output['span_orgs']:
             org = ''
             for x in range(span[0], span[1]):
                 org += output['sentence'][x] + ' '
-            locs.append(org)
-        output['tags'] = locs
+            locs.add(org)
+        output['tags'] = list(locs)
         
 
         return output['tags']
