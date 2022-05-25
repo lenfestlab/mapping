@@ -10,8 +10,10 @@ from transformers import BertForTokenClassification, AdamW
 import urllib.parse
 import geocoder
 import spacy
+from predict import processing
 
 nlp = spacy.load("en_core_web_sm")
+compoundParser = processing.CompoundParser(nlp)
 
 # model = from_pretrained(BertForTokenClassification, "noah-rush/inquirer-bert", num_labels=4)
 model = BertForTokenClassification.from_pretrained("noah-rush/inquirer-bert")
@@ -35,9 +37,22 @@ def evaluate():
   text = urllib.parse.unquote_plus(text)
   doc = nlp(text)
   spacy_tokens = [token.text for token in doc]
-  bert_tags = bert_model_predict.single_bert_prediction(model, spacy_tokens)
-  result = { "content" : text, "bert_tags": bert_tags }
+  output = bert_model_predict.single_bert_prediction(model, spacy_tokens)
+  
+
+  compoundParser.load_sent(output)
+  results = compoundParser.get_compounds()
+  # print(results)
+  if 'appos' in results:
+    for appos in results['appos']:
+      output['tags'].append(appos)
+      used = appos.split(',')
+      for word in used:
+        output['tags'].remove(word.strip())
+  # print(output['tags'])
+  result = { "content" : text, "bert_tags": output['tags'] }
   return jsonify(results = result)
+  # return output
   
 @app.route("/entities", methods=['POST'])
 def entities():
@@ -69,4 +84,8 @@ def sentences():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
-    # evaluate('Has school reform broken the cycle of poverty in Camden , N.J. ?')
+    # evaluate("You can visit Lombard St. restaurant SouthGate for the traditional Korean New Year dish Dduk Guk, a rice cake soup with pork and beef dumplings.")
+
+
+
+
