@@ -25,7 +25,7 @@ class ExtractBertEntities
         tags.each do | bt | 
           b = BertTag.new
           b.content = bt
-          b.model_version = "v1"
+          b.model_version = "v2"
           b.sentence = sentence
           b.save
         end
