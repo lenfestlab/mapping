@@ -3,6 +3,7 @@ class ExtractBertEntities
   sidekiq_options queue: :bert
 
   def perform(id)
+    model_version = "v2"
     sentence = Sentence.find_by(id: id)
     if sentence == nil
       return
@@ -10,25 +11,24 @@ class ExtractBertEntities
     if sentence.response.present?
       return
     end
-    if sentence.bert_tags_count > 0
+    bert_tags_count = sentence.bert_tags.where("model_version = ?", model_version).count
+    if bert_tags_count > 0
       return
     end
     response = Typhoeus.post("http://165.227.213.110:41686/", body: { 'content': CGI.escape(sentence.content) })    
     if response.success?    
       response_body = JSON.parse(response.body)
       results = response_body['results']
-      sentence.response = results
+      sentence.ner_response = results
       sentence.save
       
       tags = results['bert_tags']
-      if tags.count != sentence.bert_tags.count
-        tags.each do | bt | 
-          b = BertTag.new
-          b.content = bt
-          b.model_version = "v2"
-          b.sentence = sentence
-          b.save
-        end
+      tags.each do | bt | 
+        b = BertTag.new
+        b.content = bt
+        b.model_version = model_version
+        b.sentence = sentence
+        b.save
       end
       
     elsif response.timed_out?
