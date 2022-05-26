@@ -8,7 +8,7 @@ class ExtractBertEntities
     if sentence == nil
       return
     end
-    if sentence.response.present?
+    if sentence.ner_response.present?
       return
     end
     bert_tags_count = sentence.bert_tags.where("model_version = ?", model_version).count
