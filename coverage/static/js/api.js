@@ -29,7 +29,7 @@ const getAllArticles = async function(collectionId, pageNo = 1) {
 };
 
 const getPoints = async function(pointsURL, pageNo = 1) {
-    let actualUrl = pointsURL + `page=${pageNo}&per_page=${pointsPerPage}`;
+    let actualUrl = pointsURL + `model_version=v2&page=${pageNo}&per_page=${pointsPerPage}`;
     
     console.log("Retreiving points from API for page : " + actualUrl);  
     
