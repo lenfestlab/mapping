@@ -19,7 +19,7 @@ def countyData(dataSource, geoId):
   if geoId is None:
     return "Missing geoId"
         
-  pointsURL = "https://lenfest-mapping.herokuapp.com/collections/13/points.json?zipcode=" + geoId
+  pointsURL = "https://lenfest-mapping.herokuapp.com/collections/13/points.json?model_version=v2&zipcode=" + geoId
   
   before = request.args.get('before')
   if before:
