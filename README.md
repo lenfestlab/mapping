@@ -30,8 +30,7 @@
 
   * The model folder contains the python flask api that deploys the NLP models.
   * Spacy entities: POST http://165.227.213.110:41686/entities { "content": "The sample sentence to analyze." }
-  * New model: POST http://165.227.213.110:41686/ner { "content": "The sample sentence to analyze." }
-  * Old model: POST http://165.227.213.110:41686/ { "content": "The sample sentence to analyze." }
+  * BERT model: POST http://165.227.213.110:41686/ { "content": "The sample sentence to analyze." }
 
 ### web
 #### Heroku App: brown-mapping
